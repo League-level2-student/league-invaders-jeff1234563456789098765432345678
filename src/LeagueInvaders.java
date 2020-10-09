@@ -15,7 +15,6 @@ league.setup();
 	public LeagueInvaders() {
 		frame = new JFrame();
 		gp = new GamePanel();
-		
 	}
 
 	void setup() {
@@ -24,7 +23,7 @@ frame.setSize(WIDTH, HEIGHT);
 frame.setVisible(true);
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.addKeyListener(gp);
-System.out.println("REMOVE ME");
+
 
 	}
 }
