@@ -36,7 +36,12 @@ public class Rocketship extends GameObject {
 	}
 
 	public void up() {
-		y -= speed;
+		if (y + height >40) {
+			y -= speed;
+			
+		}
+
+		
 	}
 
 	void draw(Graphics g) {
