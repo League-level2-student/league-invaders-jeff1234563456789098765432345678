@@ -22,16 +22,42 @@ void addAlien() {
 	
 }
 void draw(Graphics g) {
-	  
+	  rocket.draw(g);
+	  for (int i = 0; i < aliens.size(); i++) {
+		  Alien a = aliens.get(i);
+		  a.draw(g);
+		  //use if neededdraw(g);
+	  }
 }
+void purgeObjects() {
+	for (int i = 0; i < Projectiles.size(); i++) {
+		Projectile p = Projectiles.get(i);
+		if(p.isActive==false) {
+			Projectiles.remove(i);
+		}
+		}
+	for (int i1 = 0; i1 < aliens.size(); i1++) {
+		Alien a = aliens.get(i1);
+		if(a.isActive==false) {
+			aliens.remove(i1);
+		}
+	}
+		
+	}
+	
+		
+		
+	
+	
 
 void update() {
 	for (int i = 0; i < aliens.size(); i++) {
 
-		Alien a = aliens.get(i);
-		a.update();
+			Alien a = aliens.get(i);
+			a.update();
 		if(a.x>LeagueInvaders.HEIGHT) {
 			a.isActive=false;
+			
 		}
 	}
 	

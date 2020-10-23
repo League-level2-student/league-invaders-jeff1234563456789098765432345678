@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -14,15 +16,22 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
+	Object ObjectManager=null;
 	int currentState = MENU;
 	Rocketship ship = new Rocketship(250,700,50,50);
 	Timer frameDraw;
+	 ObjectManager objectmanager = new ObjectManager(ship);
 	Font titleFont1;
 	Font titleFont2,
 	 titleFont = new Font("Arial", Font.PLAIN, 12),
 	 titleFont21 = new Font("Arial", Font.PLAIN, 35);
 	@Override
+	
 	public void paintComponent(Graphics g) {
+		
 		if (currentState == MENU) {
 			drawMenuState(g);
 		} else if (currentState == GAME) {
@@ -33,9 +42,11 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	}
 
 	void updateMenuState() {
+		
 	}
 
 	void updateGameState() {
+		objectmanager.update();
 	}
 
 	void updateEndState() {
@@ -56,10 +67,11 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
-		ship.draw(g);
-	}
+	g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+		objectmanager.draw(g);
+		
+		}
+	
 
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -73,9 +85,25 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 		
 		g.drawString("Press ENTER to restart", 170, 235);
 	}
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
+	}
+		
+	
 	public GamePanel() {
 		   frameDraw = new Timer(1000/60,this);
 		    frameDraw.start();
+		    if (needImage) {
+		        loadImage ("space.png");
+		    }
 	}
 
 	@Override
