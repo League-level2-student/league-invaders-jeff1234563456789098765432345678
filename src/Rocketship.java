@@ -12,7 +12,7 @@ public class Rocketship extends GameObject {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 		speed = 10;
 		if (needImage) {
-		    loadImage ("rocket.png");
+		    loadImage ("Rocket2.png");
 		}
 	}
 
@@ -50,6 +50,9 @@ public class Rocketship extends GameObject {
 
 		
 	}
+	public Projectile getProjectile() {
+        return new Projectile(x+width/2, y, 10, 10);
+}
 
 	void draw(Graphics g) {
 		g.setColor(Color.BLUE);

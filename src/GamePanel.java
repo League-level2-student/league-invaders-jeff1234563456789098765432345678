@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	
 	final int MENU = 0;
@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	int currentState = MENU;
 	Rocketship ship = new Rocketship(250,700,50,50);
 	Timer frameDraw;
+	Timer alienSpawn;
 	 ObjectManager objectmanager = new ObjectManager(ship);
 	Font titleFont1;
 	Font titleFont2,
@@ -51,7 +52,10 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 
 	void updateEndState() {
 	}
-
+void startGame() {
+	  alienSpawn = new Timer(1000 , objectmanager);
+	    alienSpawn.start();
+}
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
@@ -119,7 +123,7 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 		repaint();
 		
 	}
-
+//IM ON ADDING THE STARTGAME(); TO MENU TO GAME ill know if I get a bird by this time gl future me ;)
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode()==KeyEvent.VK_UP && currentState==GAME) {
@@ -147,6 +151,7 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		        
 		    }
 		    
 		}   
