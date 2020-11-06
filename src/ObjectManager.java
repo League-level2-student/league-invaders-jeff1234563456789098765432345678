@@ -6,67 +6,75 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ObjectManager implements ActionListener {
-Rocketship rocket;
-Object[] List= {};
-Object Projectile;
-Object alien;
-ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
-ArrayList<Alien> aliens = new ArrayList<Alien>();
-Random random = new Random();
-ObjectManager(Rocketship RocketX){
-	rocket = RocketX;
-}
-void addProjectile(Projectile projectile) {
-Projectiles.add(projectile);
-}
-void addAlien() {
-	aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH),0,50,50));
-	
-}
-void draw(Graphics g) {
-	  rocket.draw(g);
-	  for (int i = 0; i < aliens.size(); i++) {
-		  Alien a = aliens.get(i);
-		  a.draw(g);
-		  //use if neededdraw(g);
-	  }
-}
-void purgeObjects() {
-	for (int i = 0; i < Projectiles.size(); i++) {
-		Projectile p = Projectiles.get(i);
-		if(p.isActive==false) {
-			Projectiles.remove(i);
-		}
-		}
-	for (int i1 = 0; i1 < aliens.size(); i1++) {
-		Alien a = aliens.get(i1);
-		if(a.isActive==false) {
-			aliens.remove(i1);
-		}
-	}
-		
-	}
-	
-		
-		
-	
-	
+	Rocketship rocket;
+	Object[] List = {};
+	Object Projectile;
+	Object alien;
+	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
+	ArrayList<Alien> aliens = new ArrayList<Alien>();
+	Random random = new Random();
 
-void update() {
-	for (int i = 0; i < aliens.size(); i++) {
+	ObjectManager(Rocketship RocketX) {
+		rocket = RocketX;
+	}
+
+	void addProjectile(Projectile projectile) {
+		Projectiles.add(projectile);
+	}
+
+	void addAlien() {
+		aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH), 0, 50, 50));
+
+	}
+
+	void draw(Graphics g) {
+		rocket.draw(g);
+		for (int i = 0; i < aliens.size(); i++) {
+			Alien a = aliens.get(i);
+			a.draw(g);
+
+		}
+	}
+
+	void purgeObjects() {
+		for (int i = 0; i < Projectiles.size(); i++) {
+			Projectile p = Projectiles.get(i);
+			if (p.isActive == false) {
+				Projectiles.remove(i);
+			}
+		}
+		for (int i1 = 0; i1 < aliens.size(); i1++) {
+			Alien a = aliens.get(i1);
+			if (a.isActive == false) {
+				aliens.remove(i1);
+			}
+		}
+
+	}
+
+	void update() {
+		for (int i = 0; i < Projectiles.size(); i++) {
+			Projectile proj = Projectiles.get(i);
+			proj.update();
+			if (proj.y < 0) {
+				proj.isActive = false; 
+			}
+		}
+		for (int i = 0; i < aliens.size(); i++) {
 
 			Alien a = aliens.get(i);
 			a.update();
-		if(a.x>LeagueInvaders.HEIGHT) {
-			a.isActive=false;
-			
+			if (a.y > LeagueInvaders.HEIGHT) {
+				a.isActive = false;
+
+			}
 		}
+
 	}
-	
-}
-@Override
-public void actionPerformed(ActionEvent arg0) {
-	addAlien();
-	
-}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		addAlien();
+
+	}
 }

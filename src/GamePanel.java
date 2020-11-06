@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -51,6 +52,8 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	}
 
 	void updateEndState() {
+		alienSpawn.stop();
+
 	}
 void startGame() {
 	  alienSpawn = new Timer(1000 , objectmanager);
@@ -123,7 +126,7 @@ void startGame() {
 		repaint();
 		
 	}
-//IM ON ADDING THE STARTGAME(); TO MENU TO GAME ill know if I get a bird by this time gl future me ;)
+
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode()==KeyEvent.VK_UP && currentState==GAME) {
@@ -146,12 +149,23 @@ void startGame() {
 		    System.out.println("RIGHT");
 		    ship.right();
 		}
+	if (arg0.getKeyCode()==KeyEvent.VK_SPACE && currentState==GAME) {
+			objectmanager.addProjectile(ship.getProjectile());
+		}
 		if (arg0.getKeyCode()==KeyEvent.VK_ENTER) {
+			  if(currentState==GAME) {
+		    	  currentState=END;
+		    	  		      } 
+		        
 		    if (currentState == END) {
 		        currentState = MENU;
-		    } else {
-		        currentState++;
 		        
+		    } else{
+		    	
+		        currentState++;
+		        startGame();
+		     
+		    
 		    }
 		    
 		}   
