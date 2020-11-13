@@ -11,10 +11,10 @@ public class GameObject {
 		//yOBJ=0;
 		//widthOBJ=0;
 		//heightOBJ=0;
-	x=250;
-	y=700;
-	width=50;
-	height= 50;
+	x=xOBJ;
+	y=yOBJ;
+	width=widthOBJ;
+	height= heightOBJ;
 	
 	}
 	 void update() {}

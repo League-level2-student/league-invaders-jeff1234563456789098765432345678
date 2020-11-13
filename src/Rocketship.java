@@ -51,12 +51,13 @@ public class Rocketship extends GameObject {
 		
 	}
 	public Projectile getProjectile() {
+		//System.out.println(x+": "+y);
         return new Projectile(x+width/2, y, 10, 10);
+        
 }
 
 	void draw(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(x, y, width, height);
+		
 		if (gotImage) {
 			g.drawImage(image, x, y, width, height, null);
 		} else {

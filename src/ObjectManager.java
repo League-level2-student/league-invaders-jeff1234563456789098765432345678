@@ -20,6 +20,7 @@ public class ObjectManager implements ActionListener {
 
 	void addProjectile(Projectile projectile) {
 		Projectiles.add(projectile);
+		
 	}
 
 	void addAlien() {
@@ -32,8 +33,13 @@ public class ObjectManager implements ActionListener {
 		for (int i = 0; i < aliens.size(); i++) {
 			Alien a = aliens.get(i);
 			a.draw(g);
-
+			
 		}
+           for (int i = 0; i < Projectiles.size(); i++) {
+	Projectile p = Projectiles.get(i);
+	p.draw(g);
+		}
+		
 	}
 
 	void purgeObjects() {
