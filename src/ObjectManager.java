@@ -41,6 +41,27 @@ public class ObjectManager implements ActionListener {
 		}
 		
 	}
+void checkCollision() {
+	for (int i = 0; i < aliens.size(); i++) {
+		Alien a = aliens.get(i);
+		
+		if(rocket.collisionBox.intersects(a.collisionBox)) {
+			a.isActive=false;
+			rocket.isActive=false;
+		}//projectile colides with alien. Im so lost ask for help next class, also how was Ayush and Ashi house? sucks to suck imagine being done with break phh cant relate nerd
+		
+			//for (int i2 = 0; i < Projectiles.size(); i++) {
+				//Projectile p = Projectiles.get(i2);
+				//if(Projectile.collisionBox.intersects(p.collisionBox)) {
+				//	p.isActive=false;
+				//	a.isActive=false;
+				}
+				
+				
+			}
+			}
+		}
+	
 
 	void purgeObjects() {
 		for (int i = 0; i < Projectiles.size(); i++) {
@@ -75,6 +96,8 @@ public class ObjectManager implements ActionListener {
 
 			}
 		}
+		checkCollision();
+		purgeObjects();
 
 	}
 

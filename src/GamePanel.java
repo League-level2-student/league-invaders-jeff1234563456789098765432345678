@@ -52,6 +52,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		objectmanager.update();
+		if(ship.isActive==false) {
+			currentState = END;
+		}
+		
+
 	}
 
 	void updateEndState() {
@@ -162,18 +167,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			if (currentState == MENU) {
 				currentState = GAME;
-			}
-			if (currentState == GAME) {
-				currentState = END;
-//add else if for the if or I can switch the order
-			}
-
-			else {
-
-				currentState++;
 				startGame();
-
+				
 			}
+			else if(arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == GAME) {
+				currentState=END;
+				
+			} else if(arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == END) {
+				currentState=MENU;
+			}	
 		}
 
 	}
