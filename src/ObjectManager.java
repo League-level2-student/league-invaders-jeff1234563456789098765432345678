@@ -9,7 +9,9 @@ public class ObjectManager implements ActionListener {
 	Rocketship rocket;
 	Object[] List = {};
 	Object Projectile;
-	Object alien;
+	Object Alien;
+	int score = 0;
+	
 	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random = new Random();
@@ -20,8 +22,12 @@ public class ObjectManager implements ActionListener {
 
 	void addProjectile(Projectile projectile) {
 		Projectiles.add(projectile);
-		
+
 	}
+	public int getscore() {
+        return this.score;
+    }
+	{}
 
 	void addAlien() {
 		aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH), 0, 50, 50));
@@ -29,39 +35,41 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void draw(Graphics g) {
+		
 		rocket.draw(g);
 		for (int i = 0; i < aliens.size(); i++) {
 			Alien a = aliens.get(i);
 			a.draw(g);
-			
+
 		}
-           for (int i = 0; i < Projectiles.size(); i++) {
-	Projectile p = Projectiles.get(i);
-	p.draw(g);
+		for (int i = 0; i < Projectiles.size(); i++) {
+			Projectile p = Projectiles.get(i);
+			p.draw(g);
 		}
-		
+
 	}
-void checkCollision() {
-	for (int i = 0; i < aliens.size(); i++) {
-		Alien a = aliens.get(i);
-		
-		if(rocket.collisionBox.intersects(a.collisionBox)) {
-			a.isActive=false;
-			rocket.isActive=false;
-		}//projectile colides with alien. Im so lost ask for help next class, also how was Ayush and Ashi house? sucks to suck imagine being done with break phh cant relate nerd
-		
-			//for (int i2 = 0; i < Projectiles.size(); i++) {
-				//Projectile p = Projectiles.get(i2);
-				//if(Projectile.collisionBox.intersects(p.collisionBox)) {
-				//	p.isActive=false;
-				//	a.isActive=false;
-				}
-				
+
+	void checkCollision() {
+		for (int i = 0; i < aliens.size(); i++) {
+			Alien a = aliens.get(i);
+
+			if (rocket.collisionBox.intersects(a.collisionBox)) {
+				a.isActive = false;
+				rocket.isActive = false;
 				
 			}
+
+			for (int i2 = 0; i2 < Projectiles.size(); i2++) {
+				Projectile p = Projectiles.get(i2);
+				if (p.collisionBox.intersects(a.collisionBox)) {
+					p.isActive = false;
+					a.isActive = false;
+					score+=1;
+				}
 			}
 		}
-	
+
+	}
 
 	void purgeObjects() {
 		for (int i = 0; i < Projectiles.size(); i++) {
@@ -80,11 +88,14 @@ void checkCollision() {
 	}
 
 	void update() {
+		rocket.update();
+		
 		for (int i = 0; i < Projectiles.size(); i++) {
+			
 			Projectile proj = Projectiles.get(i);
 			proj.update();
 			if (proj.y < 0) {
-				proj.isActive = false; 
+				proj.isActive = false;
 			}
 		}
 		for (int i = 0; i < aliens.size(); i++) {

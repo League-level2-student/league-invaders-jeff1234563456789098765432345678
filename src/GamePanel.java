@@ -23,12 +23,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
-	Object ObjectManager = null;
 	int currentState = MENU;
 	Rocketship ship = new Rocketship(250, 700, 50, 50);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer Transition;
+
+	public int getscore() {
+		return this.getscore();
+	}
+
 	ObjectManager objectmanager = new ObjectManager(ship);
 	Font titleFont1;
 	Font titleFont2, titleFont = new Font("Arial", Font.PLAIN, 12), titleFont21 = new Font("Arial", Font.PLAIN, 35);
@@ -41,6 +45,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			drawMenuState(g);
 		} else if (currentState == GAME) {
 			drawGameState(g);
+
 		} else if (currentState == END) {
 			drawEndState(g);
 		}
@@ -52,10 +57,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		objectmanager.update();
-		if(ship.isActive==false) {
+		if (ship.isActive == false) {
 			currentState = END;
 		}
-		
 
 	}
 
@@ -87,6 +91,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 		objectmanager.draw(g);
 
+		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
+
 	}
 
 	void drawEndState(Graphics g) {
@@ -97,8 +103,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.drawString("Game Over", 110, 110);
 		g.setFont(titleFont);
-		g.drawString("You killed enemies", 185, 185);
-
+		g.drawString("You killed    " + objectmanager.getscore(), 185, 185);
+		g.drawString("   enemies", 270, 185);
 		g.drawString("Press ENTER to restart", 170, 235);
 	}
 
@@ -131,7 +137,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == END) {
 			updateEndState();
 		}
-		// System.out.println("action");
+
 		repaint();
 
 	}
@@ -141,23 +147,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		if (arg0.getKeyCode() == KeyEvent.VK_UP && currentState == GAME) {
 
-			System.out.println("UP");
-			ship.up();
+			ship.up = true;
+
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_DOWN && currentState == GAME) {
 
-			System.out.println("DOWN");
-			ship.down();
+			ship.down = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
-			System.out.println("LEFT");
-			ship.left();
+			ship.left = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT && currentState == GAME) {
 
-			System.out.println("RIGHT");
-			ship.right();
+			ship.right = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == GAME) {
 			objectmanager.addProjectile(ship.getProjectile());
@@ -168,21 +171,37 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			if (currentState == MENU) {
 				currentState = GAME;
 				startGame();
-				
+
+			} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == GAME) {
+				currentState = END;
+
+			} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == END) {
+				currentState = MENU;
+				ship.isActive = true;
+				ship = new Rocketship(250, 700, 50, 50);
+				objectmanager = new ObjectManager(ship);
 			}
-			else if(arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == GAME) {
-				currentState=END;
-				
-			} else if(arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == END) {
-				currentState=MENU;
-			}	
 		}
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+		if (arg0.getKeyCode() == KeyEvent.VK_DOWN && currentState == GAME) {
+
+			ship.down = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
+
+			ship.left = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT && currentState == GAME) {
+
+			ship.right = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_UP && currentState == GAME) {
+			ship.up = false;
+		}
 
 	}
 

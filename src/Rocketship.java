@@ -8,9 +8,13 @@ public class Rocketship extends GameObject {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
+	boolean up;
+	boolean down;
+	boolean left;
+	boolean right;
 	Rocketship(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
-		speed = 10;
+		speed = 7;
 		if (needImage) {
 		    loadImage ("Rocket2.png");
 		}
@@ -75,6 +79,22 @@ public class Rocketship extends GameObject {
 	        }
 	        needImage = false;
 	    }
+	}
+	void update() {
+		super.update();
+		if(up) {
+			up();
+		}
+		if(down) {
+down();
+		} 
+	if(left) {
+		left();
+	}
+	if(right) {
+		right();
+	}
+	
 	}
 
 }
