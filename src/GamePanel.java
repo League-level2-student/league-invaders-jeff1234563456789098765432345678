@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.Timer;
@@ -88,10 +89,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
+		String stage = "Easy";
 		g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 		objectmanager.draw(g);
-
+if(objectmanager.getscore()>10) {
+	stage="Medium";
+}
+if(objectmanager.getscore()>20) {
+	stage="";
+	stage="Hard";
+}
 		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
+		g.drawString("Stage: " + stage, 50, 70);
 
 	}
 
@@ -103,8 +112,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.drawString("Game Over", 110, 110);
 		g.setFont(titleFont);
-		g.drawString("You killed    " + objectmanager.getscore(), 185, 185);
-		g.drawString("   enemies", 270, 185);
+		g.drawString("You killed   " + objectmanager.getscore(), 185, 185);
+		g.drawString("enemies", 270, 185);
 		g.drawString("Press ENTER to restart", 170, 235);
 	}
 
@@ -153,6 +162,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == KeyEvent.VK_DOWN && currentState == GAME) {
 
 			ship.down = true;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE&& currentState == MENU) {
+
+			JOptionPane.showMessageDialog(null, "Use arrow keys to move. Press SPACE to fire. The game will become harder over time.");
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 

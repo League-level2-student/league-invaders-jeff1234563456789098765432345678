@@ -89,7 +89,22 @@ public class ObjectManager implements ActionListener {
 
 	void update() {
 		rocket.update();
-		
+		if(score>10) {
+			for (int i = 0; i < aliens.size(); i++) {
+
+				Alien a = aliens.get(i);
+				a.speed=8;
+				
+		}
+		}else if(score>12) {
+			for (int i = 0; i < aliens.size(); i++) {
+				
+				Alien a = aliens.get(i);
+				a.speed=0;
+				a.speed=15;
+				
+		}
+		}
 		for (int i = 0; i < Projectiles.size(); i++) {
 			
 			Projectile proj = Projectiles.get(i);

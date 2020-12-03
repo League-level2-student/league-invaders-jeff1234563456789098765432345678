@@ -11,7 +11,7 @@ public class Alien extends GameObject {
 	public static boolean gotImage = false;	
 	Alien(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
-		speed = 10;
+		speed = 5;
 		if (needImage) {
 		    loadImage ("alien.png");
 		}
