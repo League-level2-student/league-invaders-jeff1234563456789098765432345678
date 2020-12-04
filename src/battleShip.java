@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-public class Rocketship extends GameObject {
+public class battleShip extends GameObject {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
@@ -12,7 +12,7 @@ public class Rocketship extends GameObject {
 	boolean down;
 	boolean left;
 	boolean right;
-	Rocketship(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
+	battleShip(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 		speed = 8;
 		if (needImage) {

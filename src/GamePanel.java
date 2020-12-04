@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	int currentState = MENU;
-	Rocketship ship = new Rocketship(250, 700, 50, 50);
+	battleShip ship = new battleShip(250, 700, 50, 50);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer Transition;
@@ -191,7 +191,7 @@ if(objectmanager.getscore()>20) {
 			} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == END) {
 				currentState = MENU;
 				ship.isActive = true;
-				ship = new Rocketship(250, 700, 50, 50);
+				ship = new battleShip(250, 700, 50, 50);
 				objectmanager = new ObjectManager(ship);
 			}
 		}
