@@ -16,7 +16,7 @@ public class battleShip extends GameObject {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 		speed = 8;
 		if (needImage) {
-		    loadImage ("Rocket2.png");
+		    loadImage ("BattleBoat.png");
 		}
 	}
 
@@ -65,7 +65,7 @@ public class battleShip extends GameObject {
 		if (gotImage) {
 			g.drawImage(image, x, y, width, height, null);
 		} else {
-			g.setColor(Color.BLUE);
+			
 			g.fillRect(x, y, width, height);
 		}
 	}

@@ -76,11 +76,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
 
-		g.drawString("LEAGUE INVADERS", 110, 50);
+		g.drawString("BATTLE BOATS", 110, 50);
 		g.setFont(titleFont);
 		g.drawString("Press ENTER to start", 185, 185);
 
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawGameState(Graphics g) {
 		String stage = "Easy";
-		g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+		g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
 		objectmanager.draw(g);
 if(objectmanager.getscore()>10) {
 	stage="Medium";
@@ -106,7 +106,7 @@ if(objectmanager.getscore()>20) {
 
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
 
@@ -133,7 +133,7 @@ if(objectmanager.getscore()>20) {
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
 		if (needImage) {
-			loadImage("space.png");
+			loadImage("WATER.PNG");
 		}
 	}
 
@@ -179,6 +179,24 @@ if(objectmanager.getscore()>20) {
 			objectmanager.addProjectile(ship.getProjectile());
 
 		}
+		//Secondary controls begins here
+		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
+
+			ship.up = true;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {
+
+			ship.left = true;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_S && currentState == GAME) {
+			ship.down = true;
+			
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_D && currentState == GAME) {
+
+			ship.right = true;
+		}
+		
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 
 			if (currentState == MENU) {
@@ -213,6 +231,22 @@ if(objectmanager.getscore()>20) {
 			ship.right = false;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_UP && currentState == GAME) {
+			ship.up = false;
+		}
+		//Secondary controls Begins here
+		if (arg0.getKeyCode() == KeyEvent.VK_S && currentState == GAME) {
+
+			ship.down = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {
+
+			ship.left = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_D && currentState == GAME) {
+
+			ship.right = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
 			ship.up = false;
 		}
 

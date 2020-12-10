@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ObjectManager implements ActionListener {
-	Rocketship rocket;
+	battleShip rocket;
 	Object[] List = {};
 	Object Projectile;
 	Object Alien;
 	int score = 0;
 	
 	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
-	ArrayList<Rocket> aliens = new ArrayList<Rocket>();
+	ArrayList<Rocket> rockets = new ArrayList<Rocket>();
 	Random random = new Random();
 
-	ObjectManager(Rocketship RocketX) {
+	ObjectManager(battleShip RocketX) {
 		rocket = RocketX;
 	}
 
@@ -30,15 +30,15 @@ public class ObjectManager implements ActionListener {
 	{}
 
 	void addAlien() {
-		aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH-50), 0, 50, 50));
+		rockets.add(new Rocket(random.nextInt(BattleBoats.WIDTH-50), 0, 50, 50));
 
 	}
 
 	void draw(Graphics g) {
 		
 		rocket.draw(g);
-		for (int i = 0; i < aliens.size(); i++) {
-			Alien a = aliens.get(i);
+		for (int i = 0; i < rockets.size(); i++) {
+			Rocket a = rockets.get(i);
 			a.draw(g);
 
 		}
@@ -50,8 +50,8 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void checkCollision() {
-		for (int i = 0; i < aliens.size(); i++) {
-			Alien a = aliens.get(i);
+		for (int i = 0; i < rockets.size(); i++) {
+			Rocket a = rockets.get(i);
 
 			if (rocket.collisionBox.intersects(a.collisionBox)) {
 				a.isActive = false;
@@ -78,10 +78,10 @@ public class ObjectManager implements ActionListener {
 				Projectiles.remove(i);
 			}
 		}
-		for (int i1 = 0; i1 < aliens.size(); i1++) {
-			Alien a = aliens.get(i1);
+		for (int i1 = 0; i1 < rockets.size(); i1++) {
+			Rocket a = rockets.get(i1);
 			if (a.isActive == false) {
-				aliens.remove(i1);
+				rockets.remove(i1);
 			}
 		}
 
@@ -90,16 +90,16 @@ public class ObjectManager implements ActionListener {
 	void update() {
 		rocket.update();
 		if(score>10) {
-			for (int i = 0; i < aliens.size(); i++) {
+			for (int i = 0; i < rockets.size(); i++) {
 
-				Alien a = aliens.get(i);
+				Rocket a = rockets.get(i);
 				a.speed=8;
 				
 		}
 		}else if(score>12) {
-			for (int i = 0; i < aliens.size(); i++) {
+			for (int i = 0; i < rockets.size(); i++) {
 				
-				Alien a = aliens.get(i);
+				Rocket a = rockets.get(i);
 				a.speed=0;
 				a.speed=15;
 				
@@ -113,11 +113,11 @@ public class ObjectManager implements ActionListener {
 				proj.isActive = false;
 			}
 		}
-		for (int i = 0; i < aliens.size(); i++) {
+		for (int i = 0; i < rockets.size(); i++) {
 
-			Alien a = aliens.get(i);
+			Rocket a = rockets.get(i);
 			a.update();
-			if (a.y > LeagueInvaders.HEIGHT) {
+			if (a.y > BattleBoats.HEIGHT) {
 				a.isActive = false;
 
 			}

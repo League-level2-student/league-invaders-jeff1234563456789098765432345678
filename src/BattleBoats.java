@@ -7,22 +7,22 @@ public class BattleBoats{
 	GamePanel gp;
 	public static void main(String[] args) {
 		BattleBoats league = new BattleBoats();
-BattleBoats.setup();
+league.setup();
 
 
 	}
 
 	public BattleBoats() {
 		frame = new JFrame();
-		gamePanel = new GamePanel();
+		gp = new GamePanel();
 	}
 
 	void setup() {
-		frame.add(gamePanel);
+		frame.add(gp);
 frame.setSize(WIDTH, HEIGHT);
 frame.setVisible(true);
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-frame.addKeyListener(gamePanel);
+frame.addKeyListener(gp);
 
 
 	}
