@@ -13,7 +13,7 @@ public class Rocket extends GameObject {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 		speed = 5;
 		if (needImage) {
-		    loadImage ("Bomb.png");
+		    loadImage ("Bomb2.0.png");
 		}
 	}
 	void update() {

@@ -1,4 +1,4 @@
- import java.awt.Color;
+import java.awt.Color;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -26,8 +26,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean gotImage = false;
 	int currentState = MENU;
 	battleShip ship = new battleShip(250, 700, 50, 50);
+	battleShip ship2 = new battleShip(250, 700, 50, 50);
 	Timer frameDraw;
 	Timer alienSpawn;
+	Timer alienSpawn2;
 	Timer Transition;
 
 	public int getscore() {
@@ -35,6 +37,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	ObjectManager objectmanager = new ObjectManager(ship);
+	ObjectManager objectmanager2 = new ObjectManager(ship2);
 	Font titleFont1;
 	Font titleFont2, titleFont = new Font("Arial", Font.PLAIN, 12), titleFont21 = new Font("Arial", Font.PLAIN, 35);
 
@@ -58,9 +61,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		objectmanager.update();
+		objectmanager2.update();
 		if (ship.isActive == false) {
 			currentState = END;
 		}
+		if (ship2.isActive == false) {
+			currentState = END;
+		}
+		
 
 	}
 
@@ -72,16 +80,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void startGame() {
 		alienSpawn = new Timer(1000, objectmanager);
 		alienSpawn.start();
+		alienSpawn2 = new Timer(1000, objectmanager2);
+		alienSpawn2.start();
 	}
 
 	void drawMenuState(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.green);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
-		g.setColor(Color.YELLOW);
-
+		//g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
+		 g.setColor(Color.green);
+		g.setColor(Color.BLACK);
 		g.drawString("BATTLE BOATS", 110, 50);
 		g.setFont(titleFont);
+		g.setColor(Color.BLACK);
 		g.drawString("Press ENTER to start", 185, 185);
 
 		g.drawString("Press SPACE for instructions", 170, 235);
@@ -92,13 +104,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		String stage = "Easy";
 		g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
 		objectmanager.draw(g);
-if(objectmanager.getscore()>10) {
-	stage="Medium";
-}
-if(objectmanager.getscore()>20) {
-	stage="";
-	stage="Hard";
-}
+		objectmanager2.draw(g);
+		if (objectmanager.getscore() > 10) {
+			stage = "Medium";
+		}
+		if (objectmanager.getscore() > 20) {
+			stage = "";
+			stage = "Hard";
+		}
 		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
 		g.drawString("Stage: " + stage, 50, 70);
 
@@ -163,9 +176,10 @@ if(objectmanager.getscore()>20) {
 
 			ship.down = true;
 		}
-		if (arg0.getKeyCode() == KeyEvent.VK_SPACE&& currentState == MENU) {
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
-			JOptionPane.showMessageDialog(null, "Use arrow keys to move. Press SPACE to fire. The game will become harder over time.");
+			JOptionPane.showMessageDialog(null,
+					"Use arrow keys to move. Press SPACE to fire. The game will become harder over time.");
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
@@ -179,24 +193,24 @@ if(objectmanager.getscore()>20) {
 			objectmanager.addProjectile(ship.getProjectile());
 
 		}
-		//Secondary controls begins here
+		// Secondary controls begins here
 		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
 
-			ship.up = true;
+			ship2.up = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {
 
-			ship.left = true;
+			ship2.left = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_S && currentState == GAME) {
-			ship.down = true;
-			
+			ship2.down = true;
+
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_D && currentState == GAME) {
 
-			ship.right = true;
+			ship2.right = true;
 		}
-		
+
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 
 			if (currentState == MENU) {
@@ -209,8 +223,11 @@ if(objectmanager.getscore()>20) {
 			} else if (arg0.getKeyCode() == KeyEvent.VK_ENTER && currentState == END) {
 				currentState = MENU;
 				ship.isActive = true;
+				ship2.isActive = true;
 				ship = new battleShip(250, 700, 50, 50);
+				ship2 = new battleShip(250, 700, 50, 50);
 				objectmanager = new ObjectManager(ship);
+				objectmanager2 = new ObjectManager(ship2);
 			}
 		}
 
@@ -233,21 +250,25 @@ if(objectmanager.getscore()>20) {
 		if (arg0.getKeyCode() == KeyEvent.VK_UP && currentState == GAME) {
 			ship.up = false;
 		}
-		//Secondary controls Begins here
+		// Secondary controls Begins here
 		if (arg0.getKeyCode() == KeyEvent.VK_S && currentState == GAME) {
 
-			ship.down = false;
+			ship2.down = false;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {
 
-			ship.left = false;
+			ship2.left = false;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_D && currentState == GAME) {
 
-			ship.right = false;
+			ship2.right = false;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
-			ship.up = false;
+			ship2.up = false;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_SHIFT && currentState == GAME) {
+			objectmanager2.addProjectile(ship2.getProjectile());
+
 		}
 
 	}
