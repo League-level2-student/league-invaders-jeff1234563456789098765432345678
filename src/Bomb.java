@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Rocket extends GameObject {
+public class Bomb extends GameObject {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
-	Rocket(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
+	Bomb(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 		speed = 5;
 		if (needImage) {

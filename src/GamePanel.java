@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int currentState = MENU;
 	battleShip ship = new battleShip(250, 700, 50, 50);
 	battleShip ship2 = new battleShip(250, 700, 50, 50);
+	Divider divider = new Divider(200, 400, 500, 800);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer alienSpawn2;
@@ -114,7 +115,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
 		g.drawString("Stage: " + stage, 50, 70);
-
+		divider.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
