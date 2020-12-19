@@ -9,7 +9,7 @@ public class ObjectManager implements ActionListener {
 	battleShip ship;
 	battleShip ship2;
 	Object[] List = {};
-	Object Projectile;
+	//Object Projectile;
 	Object Alien;
 	int score = 0;
 	
@@ -62,31 +62,39 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void checkCollision() {
+		// 1 FORLOOP FOR BOMB AND ship
+		// another for loop for bomb and ship 2
+		// third for loop and bomb and projectile
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
-
 			if (ship.collisionBox.intersects(a.collisionBox)) {
 				a.isActive = false;
 				ship.isActive = false;
 				
 			}
+		}
+		for (int i = 0; i < bombs.size(); i++) {
+			Bomb a = bombs.get(i);
 			if (ship2.collisionBox.intersects(a.collisionBox)) {
 				a.isActive = false;
 				ship2.isActive = false;
 				
 			}
+		
+			
 			for (int i2 = 0; i2 < Projectiles.size(); i2++) {
 				Projectile p = Projectiles.get(i2);
 				if (p.collisionBox.intersects(a.collisionBox)) {
 					p.isActive = false;
 					a.isActive = false;
+					
 					score+=1;
 				}
 				
 			}
 		}
-		
 	}
+
 
 
 	void purgeObjects() {
@@ -134,6 +142,7 @@ public class ObjectManager implements ActionListener {
 			if (proj.y < 0) {
 				proj.isActive = false;
 			}
+			
 		}
 		for (int i = 0; i < bombs.size(); i++) {
 

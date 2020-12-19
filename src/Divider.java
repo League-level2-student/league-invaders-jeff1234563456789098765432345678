@@ -4,16 +4,16 @@ import java.awt.image.BufferedImage;
 
 
 
-public class Divider extends GamePanel {
+public class Divider extends GameObject {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
 	Divider(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
-		super();
+		super(heightOBJ, heightOBJ, heightOBJ, heightOBJ);
 		
 	}
 		void update() {
-			  super.update(null);
+			 
 			  
 		}
 		
@@ -22,7 +22,8 @@ public class Divider extends GamePanel {
 			 
 		        
 		        	g.setColor(Color.BLACK);
-		        	//g.fillRect(200, 400, 500, 800);
+		        	g.fillRect(250,0, 18, 800);
+		        	
 		        }
 		}
 

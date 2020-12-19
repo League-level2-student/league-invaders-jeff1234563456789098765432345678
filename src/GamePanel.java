@@ -25,9 +25,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	int currentState = MENU;
-	battleShip ship = new battleShip(250, 700, 50, 50);
-	battleShip ship2 = new battleShip(250, 700, 50, 50);
-	Divider divider = new Divider(200, 400, 500, 800);
+	battleShip ship = new battleShip(300, 700, 50, 50);
+	battleShip ship2 = new battleShip(125, 700, 50, 50);
+Divider divider = new Divider(200, 400, 500, 800);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer alienSpawn2;
@@ -116,6 +116,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
 		g.drawString("Stage: " + stage, 50, 70);
 		divider.draw(g);
+
 	}
 
 	void drawEndState(Graphics g) {
@@ -225,8 +226,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState = MENU;
 				ship.isActive = true;
 				ship2.isActive = true;
-				ship = new battleShip(250, 700, 50, 50);
-				ship2 = new battleShip(250, 700, 50, 50);
+				ship = new battleShip(300, 700, 50, 50);
+				ship2 = new battleShip(125, 700, 50, 50);
 				objectmanager = new ObjectManager(ship);
 				objectmanager2 = new ObjectManager(ship2);
 			}
