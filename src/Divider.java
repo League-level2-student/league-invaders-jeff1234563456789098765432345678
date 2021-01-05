@@ -13,7 +13,7 @@ public class Divider extends GameObject {
 		
 	}
 		void update() {
-			 
+			super.update();
 			  
 		}
 		

@@ -22,7 +22,7 @@ public class Projectile extends GameObject {
 		  
 	}
 	void loadImage(String imageFile) {
-	    if (needImage) {
+	   if (needImage) {
 	        try {
 	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
 		    gotImage = true;
@@ -33,7 +33,7 @@ public class Projectile extends GameObject {
 	    }
 	}
 	void draw(Graphics g) {
-		 
+		
 	        if (gotImage) {
 	        	g.drawImage(image, x, y, width, height, null);
 	        } else {

@@ -37,8 +37,8 @@ Divider divider = new Divider(200, 400, 500, 800);
 		return this.getscore();
 	}
 
-	ObjectManager objectmanager = new ObjectManager(ship);
-	ObjectManager objectmanager2 = new ObjectManager(ship2);
+	ObjectManager objectmanager = new ObjectManager(ship,ship2);
+
 	Font titleFont1;
 	Font titleFont2, titleFont = new Font("Arial", Font.PLAIN, 12), titleFont21 = new Font("Arial", Font.PLAIN, 35);
 
@@ -62,7 +62,6 @@ Divider divider = new Divider(200, 400, 500, 800);
 
 	void updateGameState() {
 		objectmanager.update();
-		objectmanager2.update();
 		if (ship.isActive == false) {
 			currentState = END;
 		}
@@ -81,8 +80,6 @@ Divider divider = new Divider(200, 400, 500, 800);
 	void startGame() {
 		alienSpawn = new Timer(1000, objectmanager);
 		alienSpawn.start();
-		alienSpawn2 = new Timer(1000, objectmanager2);
-		alienSpawn2.start();
 	}
 
 	void drawMenuState(Graphics g) {
@@ -102,19 +99,14 @@ Divider divider = new Divider(200, 400, 500, 800);
 	}
 
 	void drawGameState(Graphics g) {
-		String stage = "Easy";
+	
 		g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
 		objectmanager.draw(g);
-		objectmanager2.draw(g);
-		if (objectmanager.getscore() > 10) {
-			stage = "Medium";
-		}
-		if (objectmanager.getscore() > 20) {
-			stage = "";
-			stage = "Hard";
-		}
-		g.drawString("Score:" + objectmanager.getscore(), 50, 30);
-		g.drawString("Stage: " + stage, 50, 70);
+		g.setColor(Color.WHITE);
+		g.drawString("PLAYER 2", 50, 30);
+		g.drawString("PLAYER 1", 400, 30);
+		g.drawString("Score:" + objectmanager.getscore(), 50, 70);
+		g.drawString("Score: " + objectmanager.getscore2(), 400, 70);
 		divider.draw(g);
 
 	}
@@ -127,7 +119,7 @@ Divider divider = new Divider(200, 400, 500, 800);
 
 		g.drawString("Game Over", 110, 110);
 		g.setFont(titleFont);
-		g.drawString("You killed   " + objectmanager.getscore(), 185, 185);
+		g.drawString("Player 1 killed  " + objectmanager.getscore(), 185, 185);
 		g.drawString("enemies", 270, 185);
 		g.drawString("Press ENTER to restart", 170, 235);
 	}
@@ -180,8 +172,8 @@ Divider divider = new Divider(200, 400, 500, 800);
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
-			JOptionPane.showMessageDialog(null,
-					"Use arrow keys to move. Press SPACE to fire. The game will become harder over time.");
+			JOptionPane.showMessageDialog(null,"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. "
+					);
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
@@ -228,8 +220,8 @@ Divider divider = new Divider(200, 400, 500, 800);
 				ship2.isActive = true;
 				ship = new battleShip(300, 700, 50, 50);
 				ship2 = new battleShip(125, 700, 50, 50);
-				objectmanager = new ObjectManager(ship);
-				objectmanager2 = new ObjectManager(ship2);
+				objectmanager = new ObjectManager(ship,ship2);
+				
 			}
 		}
 
@@ -269,7 +261,7 @@ Divider divider = new Divider(200, 400, 500, 800);
 			ship2.up = false;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_SHIFT && currentState == GAME) {
-			objectmanager2.addProjectile(ship2.getProjectile());
+			objectmanager.addProjectile(ship2.getProjectile());
 
 		}
 

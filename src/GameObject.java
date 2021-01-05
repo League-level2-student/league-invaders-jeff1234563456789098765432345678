@@ -7,7 +7,7 @@ public class GameObject {
 	int height;
 	int speed=0;
 	boolean isActive =true;
-	Rectangle collisionBox;
+	 Rectangle collisionBox;
 	GameObject(int xOBJ,int yOBJ,int widthOBJ,int heightOBJ) {
 	x=xOBJ;
 	y=yOBJ;

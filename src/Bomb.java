@@ -19,6 +19,7 @@ public class Bomb extends GameObject {
 	void update() {
 		y+=speed;
 		  super.update();
+		  //System.out.println(x + ": "+ y+": "+ width+":"+ height);
 	}
 	void loadImage(String imageFile) {
 	    if (needImage) {
@@ -32,7 +33,6 @@ public class Bomb extends GameObject {
 	    }
 	}
 	void draw(Graphics g) {
-		 
 	        if (gotImage) {
 	        	g.drawImage(image, x, y, width, height, null);
 	        } else {
