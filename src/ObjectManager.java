@@ -5,18 +5,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.management.timer.Timer;
+
 public class ObjectManager implements ActionListener {
 	battleShip ship;
 	battleShip ship2;
 	Object[] List = {};
-	// Object Projectile;
 	Object Alien;
 	int score = 0;
 	int score2 = 0;
 
 	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
 	ArrayList<Bomb> bombs = new ArrayList<Bomb>();
-	ArrayList<Divider> divider = new ArrayList<Divider>();
+	Divider div = new Divider(250,0, 18, 800);
 	Random random = new Random();
 
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
@@ -67,18 +68,29 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void checkCollision() {
+		
 
-		for (int i = 0; i < divider.size(); i++) {
-			Divider a = divider.get(i);
-			if (ship.collisionBox.intersects(a.collisionBox)) {
-				score = -1;
+		
+			if (ship.collisionBox.intersects(div.collisionBox)) {
+				score -= 1;
+				ship.y=700;
+				ship.x=300;
+			     if(score<0) {
+			    	 
+			    	 score=0;
+			     }
+			}
+			if (ship2.collisionBox.intersects(div.collisionBox)) {
+				score2 -= 1;
+				ship2.y=700;
+				ship2.x=100;
+			     if(score2<0) {
+			    	 
+			    	 score2=0;
+			     }
 
 			}
-			if (ship2.collisionBox.intersects(a.collisionBox)) {
-				score2 = -1;
-
-			}
-		}
+		
 
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
@@ -98,10 +110,14 @@ public class ObjectManager implements ActionListener {
 
 			for (int i2 = 0; i2 < Projectiles.size(); i2++) {
 				Projectile p = Projectiles.get(i2);
-				if (p.collisionBox.intersects(a.collisionBox)) {
+				if (p.collisionBox.intersects(a.collisionBox) ) {
 					p.isActive = false;
 					a.isActive = false;
+					score2+=1;
+				}
+				if(p.x >250 && p.collisionBox.intersects(a.collisionBox)) {
 					score+=1;
+					
 				}
 
 			}
@@ -130,11 +146,22 @@ public class ObjectManager implements ActionListener {
 	void update() {
 		ship.update();
 		ship2.update();
-		if (score == 10) {
+		
+	//	if (score == 10) {
 			// This ends the game when a score of 10 is reached
-			ship.isActive = false;
-		} else if (score2 == 10) {
-			ship2.isActive = false;
+		//	ship.isActive = false;
+	//	} 
+		//if (score2 == 10) {
+	//		ship2.isActive = false;
+	//	}
+		for (int i = 0; i < Projectiles.size(); i++) {
+			Projectile proj = Projectiles.get(i);
+			proj.update();
+			//if (proj.x >250) {
+				//Testing if the projectile is on the right side
+			
+			//}
+
 		}
 		for (int i = 0; i < Projectiles.size(); i++) {
 
@@ -145,6 +172,7 @@ public class ObjectManager implements ActionListener {
 			}
 
 		}
+		
 		for (int i = 0; i < bombs.size(); i++) {
 
 			Bomb a = bombs.get(i);

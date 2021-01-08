@@ -9,8 +9,7 @@ public class Divider extends GameObject {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
 	Divider(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
-		super(heightOBJ, heightOBJ, heightOBJ, heightOBJ);
-		
+		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
 	}
 		void update() {
 			super.update();
@@ -22,7 +21,8 @@ public class Divider extends GameObject {
 			 
 		        
 		        	g.setColor(Color.BLACK);
-		        	g.fillRect(250,0, 18, 800);
+		        	g.fillRect(x,y,width,height);
+		        
 		        	
 		        }
 		}

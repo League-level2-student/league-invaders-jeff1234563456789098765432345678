@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int currentState = MENU;
 	battleShip ship = new battleShip(300, 700, 50, 50);
 	battleShip ship2 = new battleShip(125, 700, 50, 50);
-Divider divider = new Divider(200, 400, 500, 800);
+Divider div = new Divider(250,0, 18, 800);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer alienSpawn2;
@@ -99,15 +99,15 @@ Divider divider = new Divider(200, 400, 500, 800);
 	}
 
 	void drawGameState(Graphics g) {
-	
+		
 		g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
 		objectmanager.draw(g);
 		g.setColor(Color.WHITE);
 		g.drawString("PLAYER 2", 50, 30);
 		g.drawString("PLAYER 1", 400, 30);
-		g.drawString("Score:" + objectmanager.getscore(), 50, 70);
-		g.drawString("Score: " + objectmanager.getscore2(), 400, 70);
-		divider.draw(g);
+		g.drawString("Score:" + objectmanager.getscore2(), 50, 70);
+		g.drawString("Score: " + objectmanager.getscore(), 400, 70);
+		div.draw(g);
 
 	}
 
@@ -116,12 +116,13 @@ Divider divider = new Divider(200, 400, 500, 800);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
-
-		g.drawString("Game Over", 110, 110);
+		g.drawString("Game Over", 150, 110);
 		g.setFont(titleFont);
-		g.drawString("Player 1 killed  " + objectmanager.getscore(), 185, 185);
+		g.drawString("Player 1 killed " + objectmanager.getscore2(), 165, 185);
 		g.drawString("enemies", 270, 185);
-		g.drawString("Press ENTER to restart", 170, 235);
+		g.drawString("Player 2 killed " + objectmanager.getscore(), 165, 220);
+		g.drawString("enemies", 265, 220);
+		g.drawString("Press ENTER to restart", 170, 285);
 	}
 
 	void loadImage(String imageFile) {
