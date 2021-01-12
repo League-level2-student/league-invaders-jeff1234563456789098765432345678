@@ -54,6 +54,7 @@ Divider div = new Divider(250,0, 18, 800);
 		} else if (currentState == END) {
 			drawEndState(g);
 		}
+		
 	}
 
 	void updateMenuState() {
@@ -116,11 +117,26 @@ Divider div = new Divider(250,0, 18, 800);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
-		g.drawString("Game Over", 150, 110);
+		if(objectmanager.getscore2()>objectmanager.getscore()) {
+			g.drawString("Player 1 has more kills!", 150, 110);
+		} else if(objectmanager.getscore2()<objectmanager.getscore()) {
+			g.drawString("Player 2 won!", 150, 110);
+			
+		}else {
+			g.drawString("You tied!", 150, 110);
+		}
+		if(objectmanager.getscore2()==10){
+			drawEndState(g);
+			g.drawString("Player 1 got to 10 first!", 150, 110);
+		}else if(objectmanager.getscore()==10) {
+			drawEndState(g);
+			g.drawString("Player 2 got to 10 first!", 150, 110);
+		}
+		
 		g.setFont(titleFont);
-		g.drawString("Player 1 killed " + objectmanager.getscore2(), 165, 185);
+		g.drawString("Player 1 killed  " + objectmanager.getscore2(), 165, 185);
 		g.drawString("enemies", 270, 185);
-		g.drawString("Player 2 killed " + objectmanager.getscore(), 165, 220);
+		g.drawString("Player 2 killed  " + objectmanager.getscore(), 165, 220);
 		g.drawString("enemies", 265, 220);
 		g.drawString("Press ENTER to restart", 170, 285);
 	}
@@ -173,7 +189,7 @@ Divider div = new Divider(250,0, 18, 800);
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
-			JOptionPane.showMessageDialog(null,"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. "
+			JOptionPane.showMessageDialog(null,"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. "
 					);
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
@@ -190,7 +206,7 @@ Divider div = new Divider(250,0, 18, 800);
 		}
 		// Secondary controls begins here
 		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
-
+		
 			ship2.up = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {

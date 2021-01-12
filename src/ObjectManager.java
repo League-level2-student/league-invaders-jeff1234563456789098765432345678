@@ -17,9 +17,10 @@ public class ObjectManager implements ActionListener {
 
 	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
 	ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+	ArrayList<Powerup> powerups = new ArrayList<Powerup>();
 	Divider div = new Divider(250,0, 18, 800);
 	Random random = new Random();
-
+    Random rand = new Random();
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
 		ship = RocketX;
 		ship2 = RocketX2;
@@ -43,10 +44,13 @@ public class ObjectManager implements ActionListener {
 
 	{
 	}
-
+void addPowerup() {
+	
+}
 	void addAlien() {
 		// System.out.println("Alien: "+bombs.size());
 		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 50), 0, 50, 50));
+		powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50));
 		// System.out.println("Alien: "+bombs.size());
 	}
 
@@ -59,6 +63,12 @@ public class ObjectManager implements ActionListener {
 			a.draw(g);
 
 		}
+		for (int i = 0; i < powerups.size(); i++) {
+			Powerup p = powerups.get(i);
+
+			p.draw(g);
+
+		}
 
 		for (int i = 0; i < Projectiles.size(); i++) {
 			Projectile p = Projectiles.get(i);
@@ -66,9 +76,37 @@ public class ObjectManager implements ActionListener {
 		}
 
 	}
+ void speak(String words) {
+		
+		if (System.getProperty("os.name").contains("Windows")) {
+			String cmd = "PowerShell -Command \"Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('"
+					+ words + "');\"";
+			try {
+				Runtime.getRuntime().exec(cmd).waitFor();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				Runtime.getRuntime().exec("say " + words).waitFor();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	void checkCollision() {
-		
+		for (int i = 0; i < powerups.size(); i++) {
+			Powerup p = powerups.get(i);
+			if (ship.collisionBox.intersects(p.collisionBox)) {
+				speak("Trash talk power up engaged if laughter is the best medicine your face must be curing the world");
+
+			}
+			if (ship2.collisionBox.intersects(p.collisionBox)) {
+				speak("Annoying player 2 power up engaged imagine being bad at this game hardy har har cant relate loser");
+                   break;
+			}
+		}
 
 		
 			if (ship.collisionBox.intersects(div.collisionBox)) {
@@ -146,21 +184,17 @@ public class ObjectManager implements ActionListener {
 	void update() {
 		ship.update();
 		ship2.update();
-		
-	//	if (score == 10) {
-			// This ends the game when a score of 10 is reached
-		//	ship.isActive = false;
-	//	} 
-		//if (score2 == 10) {
-	//		ship2.isActive = false;
-	//	}
+		for (int i = 0; i < powerups.size(); i++) {
+			Powerup pow = powerups.get(i);
+			pow.update();
+			
+
+		}
+	
 		for (int i = 0; i < Projectiles.size(); i++) {
 			Projectile proj = Projectiles.get(i);
 			proj.update();
-			//if (proj.x >250) {
-				//Testing if the projectile is on the right side
 			
-			//}
 
 		}
 		for (int i = 0; i < Projectiles.size(); i++) {
