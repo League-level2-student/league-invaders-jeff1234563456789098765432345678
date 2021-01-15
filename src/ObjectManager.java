@@ -14,13 +14,17 @@ public class ObjectManager implements ActionListener {
 	Object Alien;
 	int score = 0;
 	int score2 = 0;
-
+	Thread speakShip1 = new Thread();
+	Thread speakShip2 = new Thread();
+	Random vrand = new Random();
+//int num = 0;
 	ArrayList<Projectile> Projectiles = new ArrayList<Projectile>();
 	ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	ArrayList<Powerup> powerups = new ArrayList<Powerup>();
-	Divider div = new Divider(250,0, 18, 800);
+	Divider div = new Divider(250, 0, 18, 800);
 	Random random = new Random();
-    Random rand = new Random();
+	Random rand = new Random();
+
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
 		ship = RocketX;
 		ship2 = RocketX2;
@@ -38,21 +42,20 @@ public class ObjectManager implements ActionListener {
 	public int getscore() {
 		return this.score;
 	}
+
 	public int getscore2() {
 		return this.score2;
 	}
 
 	{
 	}
-void addPowerup() {
-	
-}
+
 	void addAlien() {
-		// System.out.println("Alien: "+bombs.size());
 		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 50), 0, 50, 50));
-		powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50));
-		// System.out.println("Alien: "+bombs.size());
-	}
+		int i = vrand.nextInt(11);
+ if(i>9) {
+	 powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50)); 
+ }}
 
 	void draw(Graphics g) {
 		ship2.draw(g);
@@ -76,59 +79,91 @@ void addPowerup() {
 		}
 
 	}
- void speak(String words) {
-		
-		if (System.getProperty("os.name").contains("Windows")) {
-			String cmd = "PowerShell -Command \"Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('"
-					+ words + "');\"";
-			try {
-				Runtime.getRuntime().exec(cmd).waitFor();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			try {
-				Runtime.getRuntime().exec("say " + words).waitFor();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	void checkCollision() {
 		for (int i = 0; i < powerups.size(); i++) {
 			Powerup p = powerups.get(i);
 			if (ship.collisionBox.intersects(p.collisionBox)) {
-				speak("Trash talk power up engaged if laughter is the best medicine your face must be curing the world");
+				if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
 
+					int i1 = vrand.nextInt(4);
+					if (i1 == 1) {
+						speakShip1 = new Thread(new Speak(
+								"Love power up engaged       I love player 2 I think player 1 is not good, your going to win player 1"));
+					}
+					if (i1 == 2) {
+						speakShip1 = new Thread(
+								new Speak("Tips power up engaged      If you hold down space you can rapid fire"));
+					}
+					if (i1 == 3) {
+						speakShip1 = new Thread(new Speak(
+								"Useless power up engaged     Did you know that the voyager space craft will leave the solar system in thirty eight thousand years"));
+					} else {
+						speakShip1 = new Thread(new Speak(
+
+								"Trash talk power up engaged   if laughter is the best medicine your face must be curing the world"));
+
+					}
+					speakShip1.start();
+				}
 			}
+
 			if (ship2.collisionBox.intersects(p.collisionBox)) {
-				speak("Annoying player 2 power up engaged imagine being bad at this game hardy har har cant relate loser");
-                   break;
+				if (!speakShip2.isAlive() && !speakShip1.isAlive()) {
+					int i1 = vrand.nextInt(4);
+					if (i1 == 1) {
+						speakShip1 = new Thread(new Speak(
+								"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 2"));
+					}
+					if (i1 == 2) {
+						speakShip1 = new Thread(new Speak(
+								"Annoying power up engaged   Player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is going to lose player 1 is going to lose"));
+					}
+					if (i1 == 3) {
+						speakShip1 = new Thread(new Speak(
+								"Useless power up engaged     Did you know that the Hawaiian alphabet has 12 letters."));
+					} else {
+						if (i1 == 1) {
+							speakShip1 = new Thread(new Speak(
+									"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 2"));
+						}
+						if (i1 == 2) {
+							speakShip1 = new Thread(new Speak(
+									"Annoying power up engaged   Player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is going to lose player 1 is going to lose"));
+						}
+						if (i1 == 3) {
+							speakShip1 = new Thread(new Speak(
+									"Useless power up engaged     Did you know that the Hawaiian alphabet has 12 letters."));
+						}
+						if (i1 == 4) {
+							speakShip2 = new Thread(new Speak(
+									"Annoying player 2 power up engaged imagine being bad at this game hardy har har cant relate"));
+						}
+					}
+					speakShip2.start();
+				}
 			}
 		}
 
-		
-			if (ship.collisionBox.intersects(div.collisionBox)) {
-				score -= 1;
-				ship.y=700;
-				ship.x=300;
-			     if(score<0) {
-			    	 
-			    	 score=0;
-			     }
-			}
-			if (ship2.collisionBox.intersects(div.collisionBox)) {
-				score2 -= 1;
-				ship2.y=700;
-				ship2.x=100;
-			     if(score2<0) {
-			    	 
-			    	 score2=0;
-			     }
+		if (ship.collisionBox.intersects(div.collisionBox)) {
+			score -= 1;
+			ship.y = 700;
+			ship.x = 300;
+			if (score < -1) {
 
+				score = 0;
 			}
-		
+		}
+		if (ship2.collisionBox.intersects(div.collisionBox)) {
+			score2 -= 1;
+			ship2.y = 700;
+			ship2.x = 100;
+			if (score2 < 0) {
+
+				score2 = 0;
+			}
+
+		}
 
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
@@ -148,14 +183,14 @@ void addPowerup() {
 
 			for (int i2 = 0; i2 < Projectiles.size(); i2++) {
 				Projectile p = Projectiles.get(i2);
-				if (p.collisionBox.intersects(a.collisionBox) ) {
+				if (p.collisionBox.intersects(a.collisionBox)) {
 					p.isActive = false;
 					a.isActive = false;
-					score2+=1;
+					score2 += 1;
 				}
-				if(p.x >250 && p.collisionBox.intersects(a.collisionBox)) {
-					score+=1;
-					
+				if (p.x > 250 && p.collisionBox.intersects(a.collisionBox)) {
+					score += 1;
+
 				}
 
 			}
@@ -187,14 +222,12 @@ void addPowerup() {
 		for (int i = 0; i < powerups.size(); i++) {
 			Powerup pow = powerups.get(i);
 			pow.update();
-			
 
 		}
-	
+
 		for (int i = 0; i < Projectiles.size(); i++) {
 			Projectile proj = Projectiles.get(i);
 			proj.update();
-			
 
 		}
 		for (int i = 0; i < Projectiles.size(); i++) {
@@ -206,7 +239,7 @@ void addPowerup() {
 			}
 
 		}
-		
+
 		for (int i = 0; i < bombs.size(); i++) {
 
 			Bomb a = bombs.get(i);

@@ -20,14 +20,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME = 1;
 	int i = 0;
 	final int END = 2;
-
+	Thread speakShip1 = new Thread();
+	Thread speakShip2 = new Thread();
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	int currentState = MENU;
 	battleShip ship = new battleShip(300, 700, 50, 50);
 	battleShip ship2 = new battleShip(125, 700, 50, 50);
-Divider div = new Divider(250,0, 18, 800);
+	Divider div = new Divider(250, 0, 18, 800);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer alienSpawn2;
@@ -37,7 +38,7 @@ Divider div = new Divider(250,0, 18, 800);
 		return this.getscore();
 	}
 
-	ObjectManager objectmanager = new ObjectManager(ship,ship2);
+	ObjectManager objectmanager = new ObjectManager(ship, ship2);
 
 	Font titleFont1;
 	Font titleFont2, titleFont = new Font("Arial", Font.PLAIN, 12), titleFont21 = new Font("Arial", Font.PLAIN, 35);
@@ -54,7 +55,7 @@ Divider div = new Divider(250,0, 18, 800);
 		} else if (currentState == END) {
 			drawEndState(g);
 		}
-		
+
 	}
 
 	void updateMenuState() {
@@ -87,8 +88,8 @@ Divider div = new Divider(250,0, 18, 800);
 		g.setColor(Color.green);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
-		//g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
-		 g.setColor(Color.green);
+		// g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
+		g.setColor(Color.green);
 		g.setColor(Color.BLACK);
 		g.drawString("BATTLE BOATS", 110, 50);
 		g.setFont(titleFont);
@@ -100,7 +101,7 @@ Divider div = new Divider(250,0, 18, 800);
 	}
 
 	void drawGameState(Graphics g) {
-		
+
 		g.drawImage(image, 0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT, null);
 		objectmanager.draw(g);
 		g.setColor(Color.WHITE);
@@ -113,26 +114,28 @@ Divider div = new Divider(250,0, 18, 800);
 	}
 
 	void drawEndState(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
-		if(objectmanager.getscore2()>objectmanager.getscore()) {
-			g.drawString("Player 1 has more kills!", 150, 110);
-		} else if(objectmanager.getscore2()<objectmanager.getscore()) {
+		if (objectmanager.getscore2() > objectmanager.getscore()) {
+			g.drawString("Player 1 has more kills!", 125, 110);
+		} else if (objectmanager.getscore2() < objectmanager.getscore()) {
 			g.drawString("Player 2 won!", 150, 110);
-			
-		}else {
+
+		} else {
 			g.drawString("You tied!", 150, 110);
 		}
-		if(objectmanager.getscore2()==10){
+		if (objectmanager.getscore2() == 10) {
 			drawEndState(g);
+			ship.isActive=false;
 			g.drawString("Player 1 got to 10 first!", 150, 110);
-		}else if(objectmanager.getscore()==10) {
+		} else if (objectmanager.getscore() == 10) {
 			drawEndState(g);
+			ship2.isActive=false;
 			g.drawString("Player 2 got to 10 first!", 150, 110);
 		}
-		
+
 		g.setFont(titleFont);
 		g.drawString("Player 1 killed  " + objectmanager.getscore2(), 165, 185);
 		g.drawString("enemies", 270, 185);
@@ -157,7 +160,7 @@ Divider div = new Divider(250,0, 18, 800);
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
 		if (needImage) {
-			loadImage("WATER.PNG");
+			loadImage("waterv2.png");
 		}
 	}
 
@@ -189,8 +192,8 @@ Divider div = new Divider(250,0, 18, 800);
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
-			JOptionPane.showMessageDialog(null,"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. "
-					);
+			JOptionPane.showMessageDialog(null,
+					"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. ");
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
@@ -206,7 +209,7 @@ Divider div = new Divider(250,0, 18, 800);
 		}
 		// Secondary controls begins here
 		if (arg0.getKeyCode() == KeyEvent.VK_W && currentState == GAME) {
-		
+
 			ship2.up = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_A && currentState == GAME) {
@@ -237,8 +240,8 @@ Divider div = new Divider(250,0, 18, 800);
 				ship2.isActive = true;
 				ship = new battleShip(300, 700, 50, 50);
 				ship2 = new battleShip(125, 700, 50, 50);
-				objectmanager = new ObjectManager(ship,ship2);
-				
+				objectmanager = new ObjectManager(ship, ship2);
+
 			}
 		}
 
