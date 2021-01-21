@@ -114,28 +114,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawEndState(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
-		g.setFont(titleFont21);
-		g.setColor(Color.YELLOW);
-		if (objectmanager.getscore2() > objectmanager.getscore()) {
-			g.drawString("Player 1 has more kills!", 125, 110);
-		} else if (objectmanager.getscore2() < objectmanager.getscore()) {
-			g.drawString("Player 2 won!", 150, 110);
-
-		} else {
-			g.drawString("You tied!", 150, 110);
-		}
-		if (objectmanager.getscore2() == 10) {
-			drawEndState(g);
+		if (objectmanager.getscore2()==10) {
 			ship.isActive=false;
 			g.drawString("Player 1 got to 10 first!", 150, 110);
-		} else if (objectmanager.getscore() == 10) {
-			drawEndState(g);
+		} 
+		if (objectmanager.getscore()>=10) {
 			ship2.isActive=false;
 			g.drawString("Player 2 got to 10 first!", 150, 110);
 		}
 
+		g.setColor(Color.BLUE);
+		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
+		g.setFont(titleFont21);
+		g.setColor(Color.YELLOW);
+		// f (objectmanager.getscore2() > objectmanager.getscore()) {
+		//	g.drawString("Player 1 has more kills!", 125, 110);
+		//} else if (objectmanager.getscore2() < objectmanager.getscore()) {
+		//	g.drawString("Player 2 won!", 150, 110);
+
+		//} else {
+		//	g.drawString("You tied!", 150, 110);
+		//}
 		g.setFont(titleFont);
 		g.drawString("Player 1 killed  " + objectmanager.getscore2(), 165, 185);
 		g.drawString("enemies", 270, 185);
