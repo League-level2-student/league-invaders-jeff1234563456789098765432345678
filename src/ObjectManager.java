@@ -25,6 +25,10 @@ public class ObjectManager implements ActionListener {
 	Divider div = new Divider(250, 0, 18, 800);
 	Random random = new Random();
 	Random rand = new Random();
+	int num = 0;
+	boolean canShip1Speak=true;
+	boolean canShip2Speak=true;
+	int pi = 0;
 Random rad = new Random();
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
 		ship = RocketX;
@@ -52,12 +56,18 @@ Random rad = new Random();
 	}
 
 	void addAlien() {
-		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 50), 0, 50, 50));
+		int i2 = vrand.nextInt(11);
+		if(i2>2) {
+		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 270), 0, 50, 50));
+		}
+		if(i2>2) {
+			bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH/2), 0, 50, 50));
+			}
 		int i = vrand.nextInt(11);
 		//change the IF statment value for different percentage drop for powerup
- //if(i>2) {
+ if(i>9) {
 	 powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50)); 
- //}
+}
 	}
 
 	void draw(Graphics g) {
@@ -86,30 +96,43 @@ Random rad = new Random();
 	void checkCollision() {
 		for (int i = 0; i < powerups.size(); i++) {
 			Powerup p = powerups.get(i);
-			
+			if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
 			if (ship2.collisionBox.intersects(p.collisionBox)) {
 					int i1 = vrand.nextInt(4);
-					if (i1 == 1) {
+					if (i1 == 1 && canShip1Speak) {
+						i+=1;
 						speakShip1 = new Thread(new Speak(
+								
 								"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 2"));
-						speakShip2.start();
+						speakShip1.start();
+						
 					}
-					if (i1 == 2) {
+					if (i1 == 2 && canShip1Speak) {
+						i+=1;
 						speakShip1 = new Thread(new Speak(
 								"Annoying power up engaged   Player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is going to lose player 1 is going to lose"));
-						speakShip2.start();
+						speakShip1.start();
+						canShip1Speak=false;
 					}
-					if (i1 == 3) {
+					if (i1 == 3 && canShip1Speak) {
+						i+=1;
 						speakShip1 = new Thread(new Speak(
 								"Useless power up engaged     Did you know that the Hawaiian alphabet has 12 letters."));
-						speakShip2.start();
+						speakShip1.start();
 					
 					}
-					p.isActive=false;
-					
+					if(!speakShip1.isAlive()) {
+						canShip1Speak=true;
+					}
+					if(speakShip1.isAlive() && speakShip2.isAlive()) {
+						canShip1Speak=false;
+						canShip2Speak=false;
+						
+					}
+			}
 				}
 			if (ship.collisionBox.intersects(p.collisionBox)) {
-				
+				System.out.println("Player 1");
 				b+=1;
 				if(b<=1) {
 					score+=1;
@@ -117,23 +140,28 @@ Random rad = new Random();
 				if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
 //player 1
 					int i1 = vrand.nextInt(4);
-					if (i1 == 1) {
-						speakShip1 = new Thread(new Speak(
+					if (i1 == 1 && canShip2Speak) {
+				
+						speakShip2 = new Thread(new Speak(
 								"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 1"));
-						speakShip1.start();
+						speakShip2.start();
 					}
-					if (i1 == 2) {
-						speakShip1 = new Thread(
-								new Speak("Tips power up engaged      If you hold down space you can rapid fire"));
-						speakShip1.start();
-					}
-					if (i1 == 3) {
-						speakShip1 = new Thread(new Speak(
-								"Useless power up engaged     Did you know that the voyager space craft will leave the solar system in thirty eight thousand years"));
-						speakShip1.start();
-					} 
-					p.isActive=false;
+					if (i1 == 2 && canShip2Speak) {
 					
+						speakShip2 = new Thread(
+								new Speak("Tips power up engaged      If you hold down space you can rapid fire"));
+						speakShip2.start();
+					}
+					if (i1 == 3 && canShip2Speak) {
+				
+						speakShip2 = new Thread(new Speak(
+								"Useless power up engaged     Did you know that the voyager space craft will leave the solar system in thirty eight thousand years"));
+						speakShip2.start();
+					} 
+					
+					if(!speakShip2.isAlive()) {
+						canShip2Speak=true;
+					}
 				}
 			}
 
@@ -164,16 +192,23 @@ Random rad = new Random();
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
 			if (ship.collisionBox.intersects(a.collisionBox)) {
+				
 				a.isActive = false;
 				ship.isActive = false;
-
+				if(num==1) {
+					ship.isActive=true;
+				}
 			}
 		}
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
 			if (ship2.collisionBox.intersects(a.collisionBox)) {
+				
 				a.isActive = false;
 				ship2.isActive = false;
+				if(num==1) {
+					ship2.isActive=true;
+				}
 
 			}
 
@@ -188,7 +223,7 @@ Random rad = new Random();
 				if (p.x > 250 && p.collisionBox.intersects(a.collisionBox)) {
 					p.isActive = false;
 					a.isActive = false;
-					score += 5;
+					score += 1;
 					//player 1
 
 				}
@@ -212,9 +247,16 @@ Random rad = new Random();
 				bombs.remove(i1);
 
 			}
+			//for (int i2 = 0; i1 < powerups.size(); i1++) {
+			//	Powerup pow = powerups.get(i2);
+			//	if (pow.isActive == false) {
+			//		powerups.remove(i1);
+//
+			//	}
 
 		}
-	}
+		}
+	
 
 	void update() {
 		ship.update();

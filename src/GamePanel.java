@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -33,6 +34,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Timer alienSpawn;
 	Timer alienSpawn2;
 	Timer Transition;
+	
 
 	public int getscore() {
 		return this.getscore();
@@ -70,7 +72,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (ship2.isActive == false) {
 			currentState = END;
 		}
-		
+		if (objectmanager.getscore2() >= 10) {
+			currentState = END;
+			// g.drawString("Player 2 got to 10 first!", 125, 110);
+		}
+		if (objectmanager.getscore() >= 10) {
+			currentState = END;
+			// g.drawString("Player 1 got to 10 first!", 125, 110);
+		}
 
 	}
 
@@ -95,8 +104,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Press ENTER to start", 185, 185);
-
+	
 		g.drawString("Press SPACE for instructions", 170, 235);
+		g.drawString("Press 'C' for creative mode", 170, 300);
 
 	}
 
@@ -114,33 +124,39 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawEndState(Graphics g) {
-		if (objectmanager.getscore2()==10) {
-			ship.isActive=false;
-			g.drawString("Player 1 got to 10 first!", 150, 110);
-		} 
-		if (objectmanager.getscore()>=10) {
-			ship2.isActive=false;
-			g.drawString("Player 2 got to 10 first!", 150, 110);
-		}
-
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, BattleBoats.WIDTH, BattleBoats.HEIGHT);
 		g.setFont(titleFont21);
 		g.setColor(Color.YELLOW);
-		// f (objectmanager.getscore2() > objectmanager.getscore()) {
-		//	g.drawString("Player 1 has more kills!", 125, 110);
-		//} else if (objectmanager.getscore2() < objectmanager.getscore()) {
-		//	g.drawString("Player 2 won!", 150, 110);
+		if (objectmanager.getscore2() < objectmanager.getscore() && objectmanager.getscore2() < 10
+				&& objectmanager.getscore() < 10) {
+			g.drawString("Player 1 won!", 125, 110);
+		}
+		if (objectmanager.getscore2() > objectmanager.getscore() && objectmanager.getscore2() < 10
+				&& objectmanager.getscore() < 10) {
+			g.drawString("Player 2 won!", 150, 110);
 
-		//} else {
-		//	g.drawString("You tied!", 150, 110);
-		//}
+		}
+		if (objectmanager.getscore2() == objectmanager.getscore() && objectmanager.getscore2() < 10
+				&& objectmanager.getscore() < 10) {
+			g.drawString("You tied!", 150, 110);
+		}
+		if (objectmanager.getscore2() >= 10) {
+
+			g.drawString("Player 2 got to 10 first!", 100, 110);
+		}
+		if (objectmanager.getscore() >= 10) {
+
+			g.drawString("Player 1 got to 10 first!", 100, 110);
+		}
+        
 		g.setFont(titleFont);
-		g.drawString("Player 1 killed  " + objectmanager.getscore2(), 165, 185);
+		g.drawString("Player 1 killed  " + objectmanager.getscore(), 165, 185);
 		g.drawString("enemies", 270, 185);
-		g.drawString("Player 2 killed  " + objectmanager.getscore(), 165, 220);
+		g.drawString("Player 2 killed  " + objectmanager.getscore2(), 165, 220);
 		g.drawString("enemies", 265, 220);
 		g.drawString("Press ENTER to restart", 170, 285);
+
 	}
 
 	void loadImage(String imageFile) {
@@ -222,6 +238,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == KeyEvent.VK_D && currentState == GAME) {
 
 			ship2.right = true;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_C && currentState == MENU) {
+			objectmanager.num+=1;
+			ship2.speed=15;
+			ship.speed=15;
 		}
 
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {

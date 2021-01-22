@@ -39,5 +39,6 @@ public class Powerup extends GameObject{
 	        	g.fillRect(x, y, width, height);
 	        }
 	}
+	
 
 }
