@@ -29,6 +29,8 @@ public class ObjectManager implements ActionListener {
 	boolean canShip1Speak=true;
 	boolean canShip2Speak=true;
 	int pi = 0;
+	int R = 0;
+	int L = 0;
 Random rad = new Random();
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
 		ship = RocketX;
@@ -55,18 +57,38 @@ Random rad = new Random();
 	{
 	}
 
-	void addAlien() {
+	void addBomb() {
 		int i2 = vrand.nextInt(11);
-		if(i2>2) {
-		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 270), 0, 50, 50));
-		}
-		if(i2>2) {
-			bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH/2), 0, 50, 50));
+		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH-70), 0, 50, 50));
+		for (int i = 0; i < bombs.size(); i++) {
+			Bomb a = bombs.get(i);
+			if(a.x>270) {
+			//R	
+				R+=1;
+				
 			}
+			if(a.x<270) {
+				//L
+				L+=1;
+				
+			}
+			if(R>L) {
+				L+=1;
+				new Bomb(random.nextInt(BattleBoats.WIDTH-270), 0, 50, 50);
+			}
+			if(L>R){
+				R+=1;
+				new Bomb(270 + random.nextInt(BattleBoats.WIDTH), 0, 50, 50);
+				
+			}
+			//System.out.println("R: " + R + " " +  "L: " + L);
+		}
+		
+		
 		int i = vrand.nextInt(11);
 		//change the IF statment value for different percentage drop for powerup
  if(i>9) {
-	 powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50)); 
+	 powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 70), 0, 50, 50)); 
 }
 	}
 
@@ -129,14 +151,14 @@ Random rad = new Random();
 						canShip2Speak=false;
 						
 					}
+					if(div.collisionBox.intersects(p.collisionBox)) {
+						powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50)); 
+					}
 			}
 				}
 			if (ship.collisionBox.intersects(p.collisionBox)) {
-				System.out.println("Player 1");
-				b+=1;
-				if(b<=1) {
-					score+=1;
-				}
+			
+				
 				if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
 //player 1
 					int i1 = vrand.nextInt(4);
@@ -167,7 +189,16 @@ Random rad = new Random();
 
 			
 			}
-		
+		for (int i = 0; i < bombs.size(); i++) {
+			Bomb a = bombs.get(i);
+			if(a.collisionBox.intersects(div.collisionBox)) {
+				a.isActive=false;
+				
+				new Bomb(random.nextInt(BattleBoats.WIDTH-270), 0, 50, 50);
+				new Bomb(270 + random.nextInt(BattleBoats.WIDTH), 0, 50, 50);
+				
+			}
+		}
 
 		if (ship.collisionBox.intersects(div.collisionBox)) {
 			score -= 1;
@@ -202,6 +233,7 @@ Random rad = new Random();
 		}
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
+			
 			if (ship2.collisionBox.intersects(a.collisionBox)) {
 				
 				a.isActive = false;
@@ -227,6 +259,7 @@ Random rad = new Random();
 					//player 1
 
 				}
+				
 
 			}
 
@@ -299,7 +332,7 @@ Random rad = new Random();
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		addAlien();
+		addBomb();
 
 	}
 }

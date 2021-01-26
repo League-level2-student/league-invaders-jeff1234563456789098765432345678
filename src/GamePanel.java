@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -34,7 +35,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Timer alienSpawn;
 	Timer alienSpawn2;
 	Timer Transition;
-	
+	Thread speak1 = new Thread();
+	Thread speak2 = new Thread();
+	Thread speak3 = new Thread();
+	Thread speak4 = new Thread();
+	Thread speak5 = new Thread();
+	Thread speak6 = new Thread();
 
 	public int getscore() {
 		return this.getscore();
@@ -104,7 +110,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Press ENTER to start", 185, 185);
-	
+
 		g.drawString("Press SPACE for instructions", 170, 235);
 		g.drawString("Press 'C' for creative mode", 170, 300);
 
@@ -149,13 +155,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			g.drawString("Player 1 got to 10 first!", 100, 110);
 		}
-        
+
 		g.setFont(titleFont);
 		g.drawString("Player 1 killed  " + objectmanager.getscore(), 165, 185);
 		g.drawString("enemies", 270, 185);
 		g.drawString("Player 2 killed  " + objectmanager.getscore2(), 165, 220);
 		g.drawString("enemies", 265, 220);
 		g.drawString("Press ENTER to restart", 170, 285);
+		g.drawString("Press 'i' to hear a inspirational quote", 145, 700);
 
 	}
 
@@ -240,9 +247,47 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			ship2.right = true;
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_C && currentState == MENU) {
-			objectmanager.num+=1;
-			ship2.speed=15;
-			ship.speed=15;
+			objectmanager.num += 1;
+			ship2.speed = 15;
+			ship.speed = 15;
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_I && currentState == END) {
+
+
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			if (i == 1) {
+				speakShip1 = new Thread(new Speak(
+						" Start each day with a positive thought and continue to perserve through the pain "));
+				speak1.start();
+				
+			}
+			if (i == 2) {
+				speak2 = new Thread(new Speak(
+						" Frustration is only in the mind "));
+				speak2.start();
+			}
+			if (i == 3) {
+				speak3 = new Thread(new Speak(
+						" Never give up and keep going "));
+				speak3.start();
+			}
+			if (i == 4) {
+				speak4 = new Thread(new Speak(
+						" Wonder is the beginning of wisdom "));
+				speak4.start();
+			}
+			if (i == 5) {
+				speak5 = new Thread(new Speak(
+						" One day you will be able to code this game that you are playing "));
+				speak5.start();
+			}
+			if(i==6){
+				speak6 = new Thread(new Speak(
+						"Keep pushing your self because no one else will"));
+				speak6.start();
+			}
+			
 		}
 
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
