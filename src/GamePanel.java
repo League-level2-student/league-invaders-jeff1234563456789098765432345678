@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Thread speak4 = new Thread();
 	Thread speak5 = new Thread();
 	Thread speak6 = new Thread();
-
+	Timer timer;
 	public int getscore() {
 		return this.getscore();
 	}
@@ -91,6 +91,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateEndState() {
 		alienSpawn.stop();
+		//if(objectmanager.speakShip2.isAlive()==true) {
+		//objectmanager.canShip2Speak=false;
+		//}else if(objectmanager.speakShip1.isAlive()==true) {
+		//	objectmanager.canShip1Speak=false;
+			
+		//}
 
 	}
 
@@ -98,6 +104,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		alienSpawn = new Timer(1000, objectmanager);
 		alienSpawn.start();
 	}
+	
 
 	void drawMenuState(Graphics g) {
 		g.setColor(Color.green);
@@ -126,6 +133,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Score:" + objectmanager.getscore2(), 50, 70);
 		g.drawString("Score: " + objectmanager.getscore(), 400, 70);
 		div.draw(g);
+		if(objectmanager.getscore2()>=8) {
+			ship2.speed=6;
+		}else if(objectmanager.getscore()>=8) {
+			ship2.speed=6;
+		}
+		
 
 	}
 
@@ -215,7 +228,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
 			JOptionPane.showMessageDialog(null,
-					"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. ");
+					"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. \n The present gives you a point and gives you a chance at a good or bad power up.");
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
@@ -225,7 +238,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			ship.right = true;
 		}
-		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == GAME) {
+		if (arg0.getKeyCode() == KeyEvent.VK_CONTROL && currentState == GAME) {
 			objectmanager.addProjectile(ship.getProjectile());
 
 		}

@@ -13,7 +13,8 @@ public class ObjectManager implements ActionListener {
 	Object[] List = {};
 	Object Alien;
 	int score = 0;
-	int b=0;
+	int b = 0;
+	
 	int score2 = 0;
 	Thread speakShip1 = new Thread();
 	Thread speakShip2 = new Thread();
@@ -26,12 +27,14 @@ public class ObjectManager implements ActionListener {
 	Random random = new Random();
 	Random rand = new Random();
 	int num = 0;
-	boolean canShip1Speak=true;
-	boolean canShip2Speak=true;
+	boolean canShip1Speak = true;
+	boolean canShip2Speak = true;
 	int pi = 0;
 	int R = 0;
 	int L = 0;
-Random rad = new Random();
+	Random rad = new Random();
+	
+	
 	ObjectManager(battleShip RocketX, battleShip RocketX2) {
 		ship = RocketX;
 		ship2 = RocketX2;
@@ -59,37 +62,36 @@ Random rad = new Random();
 
 	void addBomb() {
 		int i2 = vrand.nextInt(11);
-		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH-70), 0, 50, 50));
+		bombs.add(new Bomb(random.nextInt(BattleBoats.WIDTH - 70), 0, 50, 50));
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
-			if(a.x>270) {
-			//R	
-				R+=1;
-				
+			if (a.x > 270) {
+				// R
+				R += 1;
+
 			}
-			if(a.x<270) {
-				//L
-				L+=1;
-				
+			if (a.x < 270) {
+				// L
+				L += 1;
+
 			}
-			if(R>L) {
-				L+=1;
-				new Bomb(random.nextInt(BattleBoats.WIDTH-270), 0, 50, 50);
+			if (R > L) {
+				L += 1;
+				new Bomb(random.nextInt(BattleBoats.WIDTH - 270), 0, 50, 50);
 			}
-			if(L>R){
-				R+=1;
+			if (L > R) {
+				R += 1;
 				new Bomb(270 + random.nextInt(BattleBoats.WIDTH), 0, 50, 50);
-				
+
 			}
-			//System.out.println("R: " + R + " " +  "L: " + L);
+			// System.out.println("R: " + R + " " + "L: " + L);
 		}
-		
-		
-		int i = vrand.nextInt(11);
-		//change the IF statment value for different percentage drop for powerup
- if(i>9) {
-	 powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 70), 0, 50, 50)); 
-}
+
+		int i = vrand.nextInt(10);
+		// change the IF statment value for different percentage drop for powerup
+		if (i >= 9) {
+			powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 70), 0, 50, 50));
+		}
 	}
 
 	void draw(Graphics g) {
@@ -112,93 +114,128 @@ Random rad = new Random();
 			Projectile p = Projectiles.get(i);
 			p.draw(g);
 		}
+		
+
 
 	}
 
 	void checkCollision() {
+		for (int i = 0; i < bombs.size(); i++) {
+			Bomb a = bombs.get(i);
+			if (a.collisionBox.intersects(div.collisionBox)) {
+				a.isActive = false;
+
+				new Bomb(random.nextInt(BattleBoats.WIDTH - 270), 0, 50, 50);
+				new Bomb(270 + random.nextInt(BattleBoats.WIDTH), 0, 50, 50);
+
+			}
+		}
 		for (int i = 0; i < powerups.size(); i++) {
 			Powerup p = powerups.get(i);
+
 			if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
-			if (ship2.collisionBox.intersects(p.collisionBox)) {
+				for (int i4 = 0; i4 < Projectiles.size(); i4++) {
+					Projectile projectiles = Projectiles.get(i4);
+				
+				
+				if (ship2.collisionBox.intersects(p.collisionBox) || p.collisionBox.intersects(projectiles.collisionBox)&& p.x>250) {
+					
+			
 					int i1 = vrand.nextInt(4);
 					if (i1 == 1 && canShip1Speak) {
-						i+=1;
+						score2 += 1;
+						i += 1;
+						
 						speakShip1 = new Thread(new Speak(
-								
+
 								"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 2"));
 						speakShip1.start();
 						
+						
+
 					}
 					if (i1 == 2 && canShip1Speak) {
-						i+=1;
+						score2 += 1;
+						i += 1;
+						
 						speakShip1 = new Thread(new Speak(
-								"Annoying power up engaged   Player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is going to lose player 1 is going to lose"));
+								"Annoying power up engaged   Player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is the coolest player 1 is going to lose player 2 is going to lose"));
 						speakShip1.start();
-						canShip1Speak=false;
+						canShip1Speak = false;
+						
 					}
 					if (i1 == 3 && canShip1Speak) {
-						i+=1;
+						score2 += 1;
+						i += 1;
+
 						speakShip1 = new Thread(new Speak(
 								"Useless power up engaged     Did you know that the Hawaiian alphabet has 12 letters."));
 						speakShip1.start();
-					
-					}
-					if(!speakShip1.isAlive()) {
-						canShip1Speak=true;
-					}
-					if(speakShip1.isAlive() && speakShip2.isAlive()) {
-						canShip1Speak=false;
-						canShip2Speak=false;
 						
 					}
-					if(div.collisionBox.intersects(p.collisionBox)) {
-						powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50)); 
+					if (!speakShip1.isAlive()) {
+						canShip1Speak = true;
 					}
+					if (speakShip1.isAlive() && speakShip2.isAlive()) {
+						canShip1Speak = false;
+						canShip2Speak = false;
+
+					}
+					if (div.collisionBox.intersects(p.collisionBox)) {
+						
+						powerups.add(new Powerup(rand.nextInt(BattleBoats.WIDTH - 10), 0, 50, 50));
+						
+					}
+				}
 			}
 				}
-			if (ship.collisionBox.intersects(p.collisionBox)) {
+			for (int i5 = 0; i5 < Projectiles.size(); i5++) {
+				Projectile projectiles = Projectiles.get(i5);
+			if (!speakShip1.isAlive() && !speakShip2.isAlive() || p.collisionBox.intersects(projectiles.collisionBox)&& p.x<250) {
 			
-				
-				if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
-//player 1
+				if (ship.collisionBox.intersects(p.collisionBox) ) {
+					//System.out.println("Ship1Collision");
+					// player 1
 					int i1 = vrand.nextInt(4);
 					if (i1 == 1 && canShip2Speak) {
-				
-						speakShip2 = new Thread(new Speak(
-								"Love power up engaged       I love player 1 I think player 2 is not good, your going to win player 1"));
+	
+						score += 1;
+						speakShip2 = new Thread(new Speak("Quick fire power up engaged"));
 						speakShip2.start();
+						for (int i4 = 0; i4 < Projectiles.size(); i4++) {
+							Projectile proj = Projectiles.get(i4);
+							proj.speed = 20;
+							
+						}
+						
 					}
 					if (i1 == 2 && canShip2Speak) {
-					
+						score += 1;
+						
 						speakShip2 = new Thread(
 								new Speak("Tips power up engaged      If you hold down space you can rapid fire"));
 						speakShip2.start();
+					
 					}
 					if (i1 == 3 && canShip2Speak) {
-				
+						score += 1;
+					
 						speakShip2 = new Thread(new Speak(
 								"Useless power up engaged     Did you know that the voyager space craft will leave the solar system in thirty eight thousand years"));
 						speakShip2.start();
-					} 
-					
-					if(!speakShip2.isAlive()) {
-						canShip2Speak=true;
+						
 					}
+
+					if (!speakShip2.isAlive()) {
+						canShip2Speak = true;
+					}
+				}
 				}
 			}
 
-			
-			}
-		for (int i = 0; i < bombs.size(); i++) {
-			Bomb a = bombs.get(i);
-			if(a.collisionBox.intersects(div.collisionBox)) {
-				a.isActive=false;
-				
-				new Bomb(random.nextInt(BattleBoats.WIDTH-270), 0, 50, 50);
-				new Bomb(270 + random.nextInt(BattleBoats.WIDTH), 0, 50, 50);
-				
-			}
 		}
+
+		
 
 		if (ship.collisionBox.intersects(div.collisionBox)) {
 			score -= 1;
@@ -223,23 +260,23 @@ Random rad = new Random();
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
 			if (ship.collisionBox.intersects(a.collisionBox)) {
-				
+
 				a.isActive = false;
 				ship.isActive = false;
-				if(num==1) {
-					ship.isActive=true;
+				if (num == 1) {
+					ship.isActive = true;
 				}
 			}
 		}
 		for (int i = 0; i < bombs.size(); i++) {
 			Bomb a = bombs.get(i);
-			
+
 			if (ship2.collisionBox.intersects(a.collisionBox)) {
-				
+
 				a.isActive = false;
 				ship2.isActive = false;
-				if(num==1) {
-					ship2.isActive=true;
+				if (num == 1) {
+					ship2.isActive = true;
 				}
 
 			}
@@ -250,16 +287,15 @@ Random rad = new Random();
 					p.isActive = false;
 					a.isActive = false;
 					score2 += 1;
-					//player 2
+					// player 2
 				}
 				if (p.x > 250 && p.collisionBox.intersects(a.collisionBox)) {
 					p.isActive = false;
 					a.isActive = false;
 					score += 1;
-					//player 1
+					// player 1
 
 				}
-				
 
 			}
 
@@ -280,16 +316,16 @@ Random rad = new Random();
 				bombs.remove(i1);
 
 			}
-			//for (int i2 = 0; i1 < powerups.size(); i1++) {
-			//	Powerup pow = powerups.get(i2);
-			//	if (pow.isActive == false) {
-			//		powerups.remove(i1);
-//
-			//	}
+			 for (int i2 = 0; i1 < powerups.size(); i1++) {
+			 Powerup pow = powerups.get(i2);
+			 if (pow.isActive == false) {
+		 powerups.remove(i1);
+
+			}
 
 		}
 		}
-	
+	}
 
 	void update() {
 		ship.update();
