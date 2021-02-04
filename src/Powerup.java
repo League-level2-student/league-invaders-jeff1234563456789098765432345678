@@ -32,6 +32,7 @@ public class Powerup extends GameObject{
 	    }
 	}
 	void draw(Graphics g) {
+
 	        if (gotImage) {
 	        	g.drawImage(image, x, y, width, height, null);
 	        } else {
