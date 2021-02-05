@@ -253,8 +253,7 @@ public class ObjectManager implements ActionListener {
 
 		if (ship.collisionBox.intersects(div.collisionBox)) {
 			score -= 1;
-			ship.y = 700;
-			ship.x = 300;
+			ship.x=ship.x+50;
 			if (score < 0) {
 
 				score = 0;
@@ -270,8 +269,7 @@ public class ObjectManager implements ActionListener {
 		}
 		if (ship2.collisionBox.intersects(div.collisionBox)) {
 			score2 -= 1;
-			ship2.y = 700;
-			ship2.x = 100;
+			ship2.x=ship2.x-50;
 			if (score2 < 0) {
 
 				score2 = 0;
