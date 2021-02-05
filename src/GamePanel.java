@@ -228,7 +228,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE && currentState == MENU) {
 
 			JOptionPane.showMessageDialog(null,
-					"There are two players. Player 1 has arrow key controls with space to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. \n The present gives you a point and gives you a chance at a good or bad power up.");
+					"There are two players. Player 1 has arrow key controls with control to fire.\n Player 2 has WASD controls with Shift to fire. First player to 10 wins!  \n If you die before that, who ever has the most kills wins. \n The present gives you a point and gives you a chance at a good or bad power up. Have fun!");
 		}
 		if (arg0.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME) {
 
