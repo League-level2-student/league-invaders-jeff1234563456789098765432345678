@@ -135,16 +135,18 @@ public class ObjectManager implements ActionListener {
 					Projectile projectiles = Projectiles.get(i4);
 
 					if ((p.collisionBox.intersects(projectiles.collisionBox) && p.x > 250)|| ship2.collisionBox.intersects(p.collisionBox)) {
+						score+=1;
 						if (ship2.collisionBox.intersects(p.collisionBox)) {
 							p.isActive = false;
 						}
 						if (p.collisionBox.intersects(projectiles.collisionBox) && p.x > 250) {
 							p.isActive = false;
 						}
+						
 						// System.out.println("Right side");
 						int i1 = vrand.nextInt(4);
 						if (i1 == 1 && canShip1Speak) {
-							score2 += 1;
+							
 							i += 1;
 
 							speakShip1 = new Thread(new Speak(
@@ -154,7 +156,7 @@ public class ObjectManager implements ActionListener {
 
 						}
 						if (i1 == 2 && canShip1Speak) {
-							score2 += 1;
+							
 							i += 1;
 
 							speakShip1 = new Thread(new Speak(
@@ -164,7 +166,7 @@ public class ObjectManager implements ActionListener {
 
 						}
 						if (i1 == 3 && canShip1Speak) {
-							score2 += 1;
+							
 							i += 1;
 
 							speakShip1 = new Thread(new Speak(
@@ -203,16 +205,18 @@ public class ObjectManager implements ActionListener {
 				if (!speakShip1.isAlive() && !speakShip2.isAlive()) {
 				
 					if ((p.collisionBox.intersects(projectiles.collisionBox) && p.x < 250) || ship.collisionBox.intersects(p.collisionBox)) {
+						score2+=1;
 						if (p.collisionBox.intersects(projectiles.collisionBox) && p.x < 250) {
 							p.isActive = false;
 						}
 						if (ship.collisionBox.intersects(p.collisionBox)) {
 							p.isActive = false;
 						}
+						
 						int i1 = vrand.nextInt(4);
 						if (i1 == 1 && canShip2Speak) {
 
-							score += 1;
+						
 							speakShip2 = new Thread(new Speak("Quick fire power up engaged"));
 							speakShip2.start();
 							for (int i4 = 0; i4 < Projectiles.size(); i4++) {
@@ -223,7 +227,7 @@ public class ObjectManager implements ActionListener {
 
 						}
 						if (i1 == 2 && canShip2Speak) {
-							score += 1;
+						
 
 							speakShip2 = new Thread(
 									new Speak("Tips power up engaged      If you hold down space you can rapid fire"));
@@ -231,7 +235,7 @@ public class ObjectManager implements ActionListener {
 
 						}
 						if (i1 == 3 && canShip2Speak) {
-							score += 1;
+						
 
 							speakShip2 = new Thread(new Speak(
 									"Useless power up engaged     Did you know that the voyager space craft will leave the solar system in thirty eight thousand years"));
@@ -255,6 +259,14 @@ public class ObjectManager implements ActionListener {
 
 				score = 0;
 			}
+		}
+		
+		for (int i = 0; i < powerups.size(); i++) {
+			Powerup pow = powerups.get(i);
+			if(pow.collisionBox.intersects(div.collisionBox)) {
+				pow.isActive=true;
+				
+		}
 		}
 		if (ship2.collisionBox.intersects(div.collisionBox)) {
 			score2 -= 1;
