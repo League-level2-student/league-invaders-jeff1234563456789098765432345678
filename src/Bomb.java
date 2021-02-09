@@ -11,7 +11,7 @@ public class Bomb extends GameObject {
 	public static boolean gotImage = false;	
 	Bomb(int xOBJ, int yOBJ, int widthOBJ, int heightOBJ) {
 		super(xOBJ, yOBJ, widthOBJ, heightOBJ);
-		speed = 5;
+		speed = 6;
 		//previous speed=7
 		if (needImage) {
 		    loadImage ("Bomb2.0.png");

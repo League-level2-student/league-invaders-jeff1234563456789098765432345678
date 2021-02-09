@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int currentState = MENU;
 	battleShip ship = new battleShip(300, 700, 50, 50);
 	battleShip ship2 = new battleShip(125, 700, 50, 50);
-	Divider div = new Divider(250, 0, 18, 800);
+	Divider div = new Divider(240, 0, 15, 800);
 	Timer frameDraw;
 	Timer alienSpawn;
 	Timer alienSpawn2;
